@@ -19,7 +19,7 @@ public class FirstTest {
         capabilities.setCapability("appium:automationName", "UiAutomator2");
         capabilities.setCapability("appium:appPackage", "org.wikipedia");
         capabilities.setCapability("appium:appActivity", ".main.MainActivity");
-        capabilities.setCapability("appium:app", "C:/Users/ameliksetyan/Desktop/JavaAppiumTest/apk/org.wikipedia_50467_apps.evozi.com.apk");
+        capabilities.setCapability("appium:app", "C:/Users/ameliksetyan/Desktop/JavaAppiumTest/apks/org.wikipedia_50467_apps.evozi.com.apk");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), capabilities);
     }
