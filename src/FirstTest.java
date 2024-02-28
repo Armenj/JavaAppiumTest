@@ -44,6 +44,12 @@ public class FirstTest {
     }
 
     @Test
+    public void testSearchInputText() {
+        waitForElementAndClick(skipButton, "Cannot find skip button");
+        assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
+    }
+
+    @Test
     public void firstTest() {
         waitForElementAndClick(skipButton, "Cannot find skip button");
         waitForElementAndClick(searchInput, "Cannot find search input");
@@ -121,5 +127,11 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.clear();
         return element;
+    }
+
+    private void assertElementHasText(By by, String expectedText, String error_message) {
+        WebElement element = waitForElementPresent(by, error_message, 5);
+        String actualText = element.getAttribute("text");
+        Assert.assertEquals(error_message, expectedText, actualText);
     }
 }
