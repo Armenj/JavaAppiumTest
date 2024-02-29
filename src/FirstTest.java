@@ -4,12 +4,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.URL;
+import java.util.List;
 
 public class FirstTest {
 
@@ -21,6 +23,7 @@ public class FirstTest {
     private By goBackArrow = By.xpath("//*[@content-desc='Navigate up']");
     private By articleTitle = By.xpath("//android.widget.TextView[@text='Java (programming language)']");
     private By javaText = By.id("org.wikipedia:id/search_src_text");
+    private By pageList = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
 
     @Before
     public void setUp() throws Exception {
@@ -47,6 +50,16 @@ public class FirstTest {
     public void testSearchInputText() {
         waitForElementAndClick(skipButton, "Cannot find skip button");
         assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
+    }
+
+    @Test
+    public void searchResultsMoreThanOne() {
+        waitForElementAndClick(skipButton, "Cannot find skip button");
+        waitForElementAndClick(searchInput, "Cannot find search input");
+        waitForElementAndSendKeys(toIntoSearch, "Java", "Cannot find search result");
+        waitForNumberOfElementsToBeMoreThan(pageList, 1, "Not enough articles found after search", 5);
+        waitForElementAndClick(goBackArrow, "Cannot find arrow");
+        waitForElementNotPresent(goBackArrow, "Go back arrow is still presetn on the page", 10);
     }
 
     @Test
@@ -133,5 +146,11 @@ public class FirstTest {
         WebElement element = waitForElementPresent(by, error_message, 5);
         String actualText = element.getAttribute("text");
         Assert.assertEquals(error_message, expectedText, actualText);
+    }
+
+    private void waitForNumberOfElementsToBeMoreThan(By by, int expectedNumber, String error_message, long timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.withMessage(error_message + "\n");
+        wait.until((WebDriver d) -> d.findElements(by).size() > expectedNumber);
     }
 }
