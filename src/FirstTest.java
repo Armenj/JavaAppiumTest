@@ -63,6 +63,22 @@ public class FirstTest {
     }
 
     @Test
+    public void searchResultsContainsJava() {
+        waitForElementAndClick(skipButton, "Cannot find skip button");
+        waitForElementAndClick(searchInput, "Cannot find search input");
+        waitForElementAndSendKeys(toIntoSearch, "Java", "Cannot type into search input");
+
+        List<WebElement> searchResults = driver.findElements(pageList);
+        int numberOfResultsToCheck = searchResults.size();
+
+        for(int i = 0; i < numberOfResultsToCheck; i++) {
+            String resultText = searchResults.get(i).getText();
+            Assert.assertTrue("Search result does not contain expected text: Java",
+                    resultText.contains("Java"));
+        }
+    }
+
+    @Test
     public void firstTest() {
         waitForElementAndClick(skipButton, "Cannot find skip button");
         waitForElementAndClick(searchInput, "Cannot find search input");
