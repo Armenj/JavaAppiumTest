@@ -101,6 +101,15 @@ public class FirstTest {
     }
 
     @Test
+    public void testArticleHasTitle(){
+        waitForElementAndClick(skipButton, "Cannot find skip button");
+        waitForElementAndClick(searchInput, "Cannot find search input");
+        waitForElementAndSendKeys(toIntoSearch, "Java", "Cannot find search result");
+        waitForElementAndClick(javaArticleSearchResult, "Result not present");
+        assertElementPresent(javaArticleTitle, "Article title is not present on the page without waiting");
+    }
+
+    @Test
     public void testSearchInputText() {
         waitForElementAndClick(skipButton, "Cannot find skip button");
         assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
@@ -253,6 +262,14 @@ public class FirstTest {
         int amount_of_elements = getAmountOfElements(by);
         if (amount_of_elements > 0) {
             String default_message = "An element '" + by.toString() + "' suposed to be not present";
+            throw new AssertionError(default_message + " " + error_message);
+        }
+    }
+
+    public void assertElementPresent(By by, String error_message) {
+        int element_count = getAmountOfElements(by);
+        if (element_count == 0) {
+            String default_message = "An element '" + by.toString() + "' supposed to be present";
             throw new AssertionError(default_message + " " + error_message);
         }
     }
