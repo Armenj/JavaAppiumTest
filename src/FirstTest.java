@@ -62,6 +62,45 @@ public class FirstTest {
     }
 
     @Test
+    public void testSaveTwoArticlesAndRemoveOne(){
+        waitForElementAndClick(skipButton, "Cannot find skip button");
+        waitForElementAndClick(searchInput, "Cannot find search input");
+        waitForElementAndSendKeys(toIntoSearch, "Java", "Cannot find search result");
+        waitForElementAndClick(javaArticleSearchResult, "Result not present");
+        waitForElementAndClick(saveArticleButton, "Cannot find more_options button");
+        waitForElementAndClick(addToListButton, "Cannot find add to list button");
+        waitForElementAndSendKeys(nameOfTheListArea, "Homework", "Cannot find area");
+        waitForElementAndClick(okButtonOnThePopUp, "Cannot find ok button on the pop-up");
+
+        waitForElementAndClick(searchInput, "Cannot find search input");
+        waitForElementAndSendKeys(toIntoSearch, "Appium", "Cannot find search result");
+        waitForElementAndClick(appiumArticleSearchResult, "Result not present");
+        waitForElementAndClick(saveArticleButton, "Cannot find more_options button");
+        waitForElementAndClick(addToListButton, "Cannot find add to list button");
+
+        waitForElementAndClick(chooseSaveFolderButton, "Cannot find the folder to save the article");
+
+        for (int i = 0; i < 3; i++) {
+            waitForElementAndClick(goBackArrow, "Cannot find arrow");
+        }
+        waitForElementAndClick(savedTabButton, "Cannot find saved button");
+        waitForElementAndClick(listOnTheSaved, "Cannot find list on the saved page");
+        swipeElementLeftToRight(pageListAppium, "Cannot find page list");
+
+        waitForElementPresent(javaArticleSearchResult, "Article search result not present");
+        waitForElementAndClick(javaArticleSearchResult, "Cannot click on article search result");
+
+        WebElement titleElement = waitForElementToBeVisible(javaArticleTitle, "Article title not found", 10);
+        String title = titleElement.getAttribute("text");
+        System.out.println(title);
+        Assert.assertEquals(
+                "we see unexpected tittle",
+                "Java (programming language)",
+                title
+        );
+    }
+
+    @Test
     public void testSearchInputText() {
         waitForElementAndClick(skipButton, "Cannot find skip button");
         assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
