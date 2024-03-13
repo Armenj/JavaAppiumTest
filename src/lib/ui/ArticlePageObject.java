@@ -21,13 +21,11 @@ public class ArticlePageObject extends MainPageObject {
         super(driver);
     }
 
-    // Измененный метод, принимающий название статьи в качестве параметра
     public WebElement waitForTitleElement(String title){
         By dynamicTitle = By.xpath("//android.widget.TextView[@text=\"" + title + "\"]");
         return this.waitForElementToBeVisible(dynamicTitle, "Cannot find article title on the page: " + title, 20);
     }
 
-    // Измененный метод, который теперь также требует название статьи
     public String getArticleTitle(String title){
         WebElement title_element = waitForTitleElement(title);
         return title_element.getAttribute("text");

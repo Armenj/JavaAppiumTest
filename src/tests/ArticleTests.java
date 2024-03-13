@@ -38,11 +38,11 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject searchPageObject = new SearchPageObject(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
-        searchPageObject.clickByArticleWithSubstring("Java (programming language)");//от начала и до открытия статьи
+        searchPageObject.clickByArticleWithSubstring("Java (programming language)");
         ArticlePageObject articlePageObject = new ArticlePageObject(driver);
         articlePageObject.waitForTitleElement("Java (programming language)");
         String name_of_folder = "Learning programming";
-        articlePageObject.addArticleToMyList(name_of_folder); //сохраняет и дает название
+        articlePageObject.addArticleToMyList(name_of_folder);
         searchPageObject.clickSearchInput();
         searchPageObject.typeSearchLine("Appium");
         searchPageObject.clickByArticleWithSubstring("Appium");
