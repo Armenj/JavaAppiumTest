@@ -1,10 +1,17 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
+import org.openqa.selenium.By;
 
 public class SearchTests extends CoreTestCase {
+
+    private By searchInput = By.xpath("//*[@text='Search Wikipedia']");
+    private By goBackArrow = By.xpath("//*[@content-desc='Navigate up']");
+    private By pageListAppium = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
+
     @Test
     public void testAmountOfEmptySearch() {
         SearchPageObject searchPageObject = new SearchPageObject(driver);
@@ -39,6 +46,32 @@ public class SearchTests extends CoreTestCase {
         searchPageObject.waitForCancelButtonToAppear();
         searchPageObject.clickCancelSearch();
         searchPageObject.waitForCancelButtonToDisappear();
+    }
+
+    @Test
+    public void testSearchInputText() {
+        MainPageObject mainPageObject = new MainPageObject(driver);
+        mainPageObject.skipOnboarding();
+        mainPageObject.assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
+    }
+
+    @Test
+    public void testSearchResultsMoreThanOne() {
+        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        searchPageObject.initSearchInput();
+        searchPageObject.typeSearchLine("Java");
+        MainPageObject mainPageObject = new MainPageObject(driver);
+        mainPageObject.waitForNumberOfElementsToBeMoreThan(pageListAppium, 1, "Not enough articles found after search", 5);
+        mainPageObject.waitForElementAndClick(goBackArrow, "Cannot find arrow");
+        mainPageObject.waitForElementNotPresent(goBackArrow, "Go back arrow is still presetn on the page", 10);
+    }
+
+    @Test
+    public void testSearchResultsContainsJava() {
+        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        searchPageObject.initSearchInput();
+        searchPageObject.typeSearchLine("Java");
+        searchPageObject.verifySearchResultsContainText("Java");
     }
 
 }

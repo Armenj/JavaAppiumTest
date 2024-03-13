@@ -8,6 +8,7 @@ import lib.ui.SearchPageObject;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
+
     @Test
     public void testSaveFirstArticleToMyList() {
         SearchPageObject searchPageObject = new SearchPageObject(driver);

@@ -4,6 +4,8 @@ import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import static junit.framework.TestCase.assertEquals;
+
 public class ArticlePageObject extends MainPageObject {
 
     private static final By
@@ -11,7 +13,8 @@ public class ArticlePageObject extends MainPageObject {
             SAVE_ARTICLE_BUTTON = By.id("org.wikipedia:id/page_save"),
             ADD_TO_LIST_BUTTON = By.id("org.wikipedia:id/snackbar_action"),
             NAME_OF_THE_LIST_AREA = By.id("org.wikipedia:id/text_input"),
-            OK_BUTTON_ON_THE_POPUP = By.id("android:id/button1");
+            OK_BUTTON_ON_THE_POPUP = By.id("android:id/button1"),
+            JAVA_ARTICLE_TITLE = By.xpath("//*[@text='Java (programming language)']");
 
 
     public ArticlePageObject(AndroidDriver driver){
@@ -30,6 +33,14 @@ public class ArticlePageObject extends MainPageObject {
         return title_element.getAttribute("text");
     }
 
+    public String getArticleTitleAndValidate(String expectedTitle) {
+        WebElement titleElement = this.waitForElementToBeVisible(JAVA_ARTICLE_TITLE, "Article title not found", 10);
+        String title = titleElement.getAttribute("text");
+        System.out.println(title);
+        assertEquals("We see unexpected title", expectedTitle, title);
+        return title;
+    }
+
     public void swipeToFooter(){
         this.verticalSwipeToBottom();
         this.swipeUpToFindElement(FOOTER_ELEMENT, "Cannot find the end of the article", 3);
@@ -38,7 +49,16 @@ public class ArticlePageObject extends MainPageObject {
     public void addArticleToMyList(String name_of_folder){
         this.waitForElementAndClick(SAVE_ARTICLE_BUTTON, "Cannot find more_options button");
         this.waitForElementAndClick(ADD_TO_LIST_BUTTON, "Cannot find add to list button");
-        this.waitForElementAndSendKeys(NAME_OF_THE_LIST_AREA, "Test", "Cannot find area");
+        this.waitForElementAndSendKeys(NAME_OF_THE_LIST_AREA, name_of_folder, "Cannot find area");
         this.waitForElementAndClick(OK_BUTTON_ON_THE_POPUP, "Cannot find ok button on the pop-up");
+    }
+
+    public void addAnotherArticleToMyList(){
+        this.waitForElementAndClick(SAVE_ARTICLE_BUTTON, "Cannot find more_options button");
+        this.waitForElementAndClick(ADD_TO_LIST_BUTTON, "Cannot find add to list button");
+    }
+
+    public void assertArticleTitlePresent() {
+        this.assertElementPresent(JAVA_ARTICLE_TITLE, "Article title is not present on the page without waiting");
     }
 }

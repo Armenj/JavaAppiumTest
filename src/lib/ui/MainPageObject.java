@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainPageObject {
+    private static final By
+            SKIP_BUTTON = By.id("org.wikipedia:id/fragment_onboarding_skip_button");
     protected AndroidDriver<WebElement> driver;
 
     public MainPageObject(AndroidDriver driver){
@@ -133,6 +135,10 @@ public class MainPageObject {
             verticalSwipeToBottom();
             ++already_swiped;
         }
+    }
+
+    public void skipOnboarding(){
+        this.waitForElementAndClick(SKIP_BUTTON, "Cannot find skip button");
     }
 
     public void swipeElementLeftToRight(By by, String error_message) {
