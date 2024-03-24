@@ -1,5 +1,6 @@
 package lib.ui;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -18,9 +19,9 @@ import java.util.List;
 public class MainPageObject {
     private static final By
             SKIP_BUTTON = By.id("org.wikipedia:id/fragment_onboarding_skip_button");
-    protected AndroidDriver<WebElement> driver;
+    protected AppiumDriver<WebElement> driver;
 
-    public MainPageObject(AndroidDriver driver){
+    public MainPageObject(AppiumDriver driver){
         this.driver = driver;
     }
 
