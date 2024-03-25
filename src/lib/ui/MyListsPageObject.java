@@ -1,6 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class MyListsPageObject extends MainPageObject {
@@ -13,7 +13,7 @@ public class MyListsPageObject extends MainPageObject {
             LIST_THE_SAVED = By.xpath("(//*[@resource-id='org.wikipedia:id/item_title_container'])[2]");
 
 
-    public MyListsPageObject(AndroidDriver driver) {
+    public MyListsPageObject(AppiumDriver driver) {
         super(driver);
     }
 

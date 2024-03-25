@@ -1,33 +1,20 @@
 package lib;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import junit.framework.TestCase;
 import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-
-import java.net.URL;
 import java.time.Duration;
 
 public class CoreTestCase extends TestCase {
-    protected AndroidDriver<WebElement> driver;
-    private static String AppiumURL = "http://127.0.0.1:4723/";
+    protected AppiumDriver driver;
+    protected Platform Platform;
 
     @Override
     protected void setUp() throws Exception {
 
         super.setUp();
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        capabilities.setCapability("appium:platformName", "Android");
-        capabilities.setCapability("appium:deviceName", "AndroidTestDevice");
-        capabilities.setCapability("appium:platformVersion", "8.0");
-        capabilities.setCapability("appium:automationName", "UiAutomator2");
-        capabilities.setCapability("appium:appPackage", "org.wikipedia");
-        capabilities.setCapability("appium:appActivity", ".main.MainActivity");
-        capabilities.setCapability("appium:app", "C:/Users/ameliksetyan/Desktop/JavaAppiumTest/apks/org.wikipedia_50467_apps.evozi.com.apk");
-
-        driver = new AndroidDriver<>(new URL(AppiumURL), capabilities);
+        this.Platform = new Platform();
+        driver = this.Platform.getDriver();
         this.rotatedScreenPortrait();
     }
 

@@ -1,6 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -17,7 +17,7 @@ public class ArticlePageObject extends MainPageObject {
             JAVA_ARTICLE_TITLE = By.xpath("//*[@text='Java (programming language)']");
 
 
-    public ArticlePageObject(AndroidDriver driver){
+    public ArticlePageObject(AppiumDriver driver){
         super(driver);
     }
 

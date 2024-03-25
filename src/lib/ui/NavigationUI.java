@@ -1,6 +1,6 @@
 package lib.ui;
 
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class NavigationUI extends MainPageObject{
@@ -8,7 +8,7 @@ public class NavigationUI extends MainPageObject{
             GO_BACK_ARROW = By.xpath("//*[@content-desc='Navigate up']"),
             SAVED_TAB_BUTTON = By.xpath("(//*[@resource-id='org.wikipedia:id/navigation_bar_item_icon_view'])[2]");
 
-    public NavigationUI(AndroidDriver driver){
+    public NavigationUI(AppiumDriver driver){
         super(driver);
     }
 
