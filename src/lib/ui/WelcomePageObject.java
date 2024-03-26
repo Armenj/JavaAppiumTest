@@ -1,16 +1,15 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 
 public class WelcomePageObject extends MainPageObject {
 
-    private static final By LEARN_MORE_LINK = By.xpath("//XCUIElementTypeStaticText[@name='Узнать подробнее о Википедии']");
-    private static final By NEW_WAY_TO_EXPLORE = By.id("Новые способы изучения");
-    private static final By ADD_OR_EDIT_PREFERRED_LANGUAGES = By.xpath("//XCUIElementTypeStaticText[@name='Добавить или изменить предпочтительные языки']");
-    private static final By LEARN_MORE_ABOUT_DATA_COLLECTED = By.xpath("//XCUIElementTypeStaticText[@name='Learn more about our privacy policy and terms of use']");
-    private static final By NEXT_BUTTON = By.xpath("//XCUIElementTypeStaticText[@name='Далее']");
-    private static final By GET_STARTED_BUTTON = By.xpath("//XCUIElementTypeStaticText[@name='Начать']");
+    private static final String LEARN_MORE_LINK = "xpath://XCUIElementTypeStaticText[@name='Узнать подробнее о Википедии']";
+    private static final String NEW_WAY_TO_EXPLORE = "id:Новые способы изучения";
+    private static final String ADD_OR_EDIT_PREFERRED_LANGUAGES = "xpath://XCUIElementTypeStaticText[@name='Добавить или изменить предпочтительные языки']";
+    private static final String LEARN_MORE_ABOUT_DATA_COLLECTED = "xpath://XCUIElementTypeStaticText[@name='Learn more about our privacy policy and terms of use']";
+    private static final String NEXT_BUTTON = "xpath://XCUIElementTypeStaticText[@name='Далее']";
+    private static final String GET_STARTED_BUTTON = "xpath://XCUIElementTypeStaticText[@name='Начать']";
 
     public WelcomePageObject(AppiumDriver driver) {
         super(driver);
