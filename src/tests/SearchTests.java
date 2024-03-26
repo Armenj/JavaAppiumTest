@@ -8,9 +8,11 @@ import org.openqa.selenium.By;
 
 public class SearchTests extends CoreTestCase {
 
-    private By searchInput = By.xpath("//*[@text='Search Wikipedia']");
-    private By goBackArrow = By.xpath("//*[@content-desc='Navigate up']");
-    private By pageListAppium = By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_title']");
+    private static final String
+
+     searchInput = "xpath://*[@text='Search Wikipedia']",
+     goBackArrow = "xpath://*[@content-desc='Navigate up']",
+     pageListAppium = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_title']";
 
     @Test
     public void testAmountOfEmptySearch() {

@@ -1,20 +1,19 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static junit.framework.TestCase.assertEquals;
 
 public class ArticlePageObject extends MainPageObject {
 
-    private static final By
-            FOOTER_ELEMENT = By.xpath("//*[@text='View article in browser']"),
-            SAVE_ARTICLE_BUTTON = By.id("org.wikipedia:id/page_save"),
-            ADD_TO_LIST_BUTTON = By.id("org.wikipedia:id/snackbar_action"),
-            NAME_OF_THE_LIST_AREA = By.id("org.wikipedia:id/text_input"),
-            OK_BUTTON_ON_THE_POPUP = By.id("android:id/button1"),
-            JAVA_ARTICLE_TITLE = By.xpath("//*[@text='Java (programming language)']");
+    private static final String
+            FOOTER_ELEMENT = "xpath://*[@text='View article in browser']",
+            SAVE_ARTICLE_BUTTON = "id:org.wikipedia:id/page_save",
+            ADD_TO_LIST_BUTTON = "id:org.wikipedia:id/snackbar_action",
+            NAME_OF_THE_LIST_AREA = "id:org.wikipedia:id/text_input",
+            OK_BUTTON_ON_THE_POPUP = "id:android:id/button1",
+            JAVA_ARTICLE_TITLE = "xpath://*[@text='Java (programming language)']";
 
 
     public ArticlePageObject(AppiumDriver driver){
@@ -22,8 +21,8 @@ public class ArticlePageObject extends MainPageObject {
     }
 
     public WebElement waitForTitleElement(String title){
-        By dynamicTitle = By.xpath("//android.widget.TextView[@text=\"" + title + "\"]");
-        return this.waitForElementToBeVisible(dynamicTitle, "Cannot find article title on the page: " + title, 20);
+        String dynamicTitleLocator = "xpath://*[@text='" + title + "']"; // Используйте одинарные кавычки внутри XPath
+        return this.waitForElementToBeVisible(dynamicTitleLocator, "Cannot find article title on the page: " + title, 20);
     }
 
     public String getArticleTitle(String title){
