@@ -1,6 +1,7 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 
 public class MainPageObject {
     private static final String
-            SKIP_BUTTON = "id:org.wikipedia:id/fragment_onboarding_skip_button";
+            SKIP_BUTTON = "xpath:xpath://XCUIElementTypeStaticText[@name='Skip']";
     protected AppiumDriver<WebElement> driver;
 
     public MainPageObject(AppiumDriver driver){
@@ -126,7 +127,7 @@ public class MainPageObject {
         swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
                 PointerInput.Origin.viewport(), centerX, (int) startY));
         swipe.addAction(finger.createPointerDown(0));
-        swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(900),
                 PointerInput.Origin.viewport(), centerX, (int) endY));
         swipe.addAction(finger.createPointerUp(0));
         driver.perform(Arrays.asList(swipe));
@@ -145,8 +146,25 @@ public class MainPageObject {
         }
     }
 
+    public void swipUpTillElementAppear(String locator, String error_messagge, int max_swipes){
+        int already_swiped = 0;
+        while (!this.isElementLocatedOnTheScreen(locator)){
+
+            if(already_swiped > max_swipes){
+                Assert.assertTrue(error_messagge, this.isElementLocatedOnTheScreen(locator));
+            }
+
+        }
+    }
+
+    public boolean isElementLocatedOnTheScreen(String locator){
+        int element_location_by_y = this.waitForElementPresent(locator, "Cannot find element by locator", 5).getLocation().getY();
+        int screen_size_by_y = driver.manage().window().getSize().getHeight();
+        return element_location_by_y < screen_size_by_y;
+    }
+
     public void skipOnboarding(){
-        this.waitForElementAndClick(SKIP_BUTTON, "Cannot find skip button");
+        this.waitForElementAndClick(SKIP_BUTTON, "Cannot find skip button ?");
     }
 
     public void swipeElementLeftToRight(String locator, String error_message) {
@@ -160,11 +178,22 @@ public class MainPageObject {
 
         PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
         Sequence swipe = new Sequence(finger, 1);
-        swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
-                PointerInput.Origin.viewport(), leftX, centerY));
-        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-        swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
-                PointerInput.Origin.viewport(), rightX, centerY));
+
+        if (Platform.getInstance().isAndroid()) {
+            // Для Android: свайп справа налево (как и было изначально)
+            swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
+                    PointerInput.Origin.viewport(), rightX, centerY));
+            swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+            swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
+                    PointerInput.Origin.viewport(), leftX, centerY));
+        } else if (Platform.getInstance().isIOS()) {
+            // Для iOS: тоже свайп справа налево, но параметры могут быть скорректированы под специфику работы с iOS
+            swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
+                    PointerInput.Origin.viewport(), rightX, centerY));
+            swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+            swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
+                    PointerInput.Origin.viewport(), leftX, centerY));
+        }
         swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
         driver.perform(Arrays.asList(swipe));
     }

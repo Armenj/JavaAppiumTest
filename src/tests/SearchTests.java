@@ -3,6 +3,7 @@ package tests;
 import lib.CoreTestCase;
 import lib.ui.MainPageObject;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPaggeObjectFactory;
 import org.junit.Test;
 import org.openqa.selenium.By;
 
@@ -16,7 +17,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfEmptySearch() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.thereIsNotResultOfSearch();
@@ -24,7 +25,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfNotEmptySearch() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Linkin Park Diskography");
         int getSearchResultCount = searchPageObject.getSearchResultCount();
@@ -34,15 +35,15 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testSearch() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
-        searchPageObject.waitForSearchResult("Java");
+        searchPageObject.waitForSearchResult("Java (programming language)");
     }
 
     @Test
     public void testCancelSearch() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.waitForCancelButtonToAppear();
@@ -53,13 +54,13 @@ public class SearchTests extends CoreTestCase {
     @Test
     public void testSearchInputText() {
         MainPageObject mainPageObject = new MainPageObject(driver);
-        mainPageObject.skipOnboarding();
+//        mainPageObject.skipOnboarding();
         mainPageObject.assertElementHasText(searchInput, "Search Wikipedia", "Search input does not contain the expected text.");
     }
 
     @Test
     public void testSearchResultsMoreThanOne() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         MainPageObject mainPageObject = new MainPageObject(driver);
@@ -70,7 +71,7 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testSearchResultsContainsJava() {
-        SearchPageObject searchPageObject = new SearchPageObject(driver);
+        SearchPageObject searchPageObject = SearchPaggeObjectFactory.get(driver);
         searchPageObject.initSearchInput();
         searchPageObject.typeSearchLine("Java");
         searchPageObject.verifySearchResultsContainText("Java");

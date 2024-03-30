@@ -1,19 +1,21 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 import org.openqa.selenium.WebElement;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class ArticlePageObject extends MainPageObject {
+abstract public class ArticlePageObject extends MainPageObject {
 
-    private static final String
-            FOOTER_ELEMENT = "xpath://*[@text='View article in browser']",
-            SAVE_ARTICLE_BUTTON = "id:org.wikipedia:id/page_save",
-            ADD_TO_LIST_BUTTON = "id:org.wikipedia:id/snackbar_action",
-            NAME_OF_THE_LIST_AREA = "id:org.wikipedia:id/text_input",
-            OK_BUTTON_ON_THE_POPUP = "id:android:id/button1",
-            JAVA_ARTICLE_TITLE = "xpath://*[@text='Java (programming language)']";
+    protected static String
+            FOOTER_ELEMENT,
+            SAVE_ARTICLE_BUTTON,
+            ADD_TO_LIST_BUTTON,
+            NAME_OF_THE_LIST_AREA ,
+            OK_BUTTON_ON_THE_POPUP,
+            CLOSE_ARTICLE_BUTTON,
+            JAVA_ARTICLE_TITLE;
 
 
     public ArticlePageObject(AppiumDriver driver){
@@ -21,14 +23,39 @@ public class ArticlePageObject extends MainPageObject {
     }
 
     public WebElement waitForTitleElement(String title){
-        String dynamicTitleLocator = "xpath://*[@text='" + title + "']"; // Используйте одинарные кавычки внутри XPath
+        String dynamicTitleLocator;
+        if(Platform.getInstance().isAndroid()){
+            dynamicTitleLocator = "xpath://*[@text='" + title + "']";
+        } else {
+            // Для iOS мы попробуем найти элемент по атрибуту name или label
+            dynamicTitleLocator = "xpath://*[contains(@name,'" + title + "') or contains(@label,'" + title + "')]";
+        }
         return this.waitForElementToBeVisible(dynamicTitleLocator, "Cannot find article title on the page: " + title, 20);
     }
 
-    public String getArticleTitle(String title){
+
+    public String getArticleTitle(String title) {
         WebElement title_element = waitForTitleElement(title);
-        return title_element.getAttribute("text");
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getAttribute("text");
+        } else {
+            // Попытка получить текст статьи через различные атрибуты
+            String nameAttribute = title_element.getAttribute("name");
+            if (nameAttribute == null || nameAttribute.isEmpty()) {
+                // Если атрибут name не содержит текста, пробуем label
+                String labelAttribute = title_element.getAttribute("label");
+                if (labelAttribute == null || labelAttribute.isEmpty()) {
+                    // Если атрибут label также не содержит текста, пробуем value
+                    return title_element.getAttribute("value");
+                } else {
+                    return labelAttribute;
+                }
+            } else {
+                return nameAttribute;
+            }
+        }
     }
+
 
     public String getArticleTitleAndValidate(String expectedTitle) {
         WebElement titleElement = this.waitForElementToBeVisible(JAVA_ARTICLE_TITLE, "Article title not found", 10);
@@ -57,5 +84,9 @@ public class ArticlePageObject extends MainPageObject {
 
     public void assertArticleTitlePresent() {
         this.assertElementPresent(JAVA_ARTICLE_TITLE, "Article title is not present on the page without waiting");
+    }
+
+    public void addArticleToMySaved(){
+        this.waitForElementAndClick(ADD_TO_LIST_BUTTON, "Cannot find napotom button");
     }
 }

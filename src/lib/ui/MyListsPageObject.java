@@ -2,13 +2,14 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 
-public class MyListsPageObject extends MainPageObject {
-    private static final String
-            PAGE_LIST_TITLE = "id:org.wikipedia:id/page_list_item_title",
-            GO_BACK_ARROW = "xpath://*[@content-desc='Navigate up']",
-            CHOOSE_SAVE_FOLDER_BUTTON = "id:org.wikipedia:id/item_title",
-            SAVED_TAB_BUTTON = "xpath://*[@content-desc='Saved']",
-            LIST_THE_SAVED = "xpath://*[contains(@resource-id,'item_title_container')][2]";
+abstract public class MyListsPageObject extends MainPageObject {
+    protected static String
+            PAGE_LIST_TITLE,
+            GO_BACK_ARROW,
+            CHOOSE_SAVE_FOLDER_BUTTON,
+            SAVED_TAB_BUTTON,
+            ARTICLE_BY_TITLE,
+            LIST_THE_SAVED;
 
     public MyListsPageObject(AppiumDriver driver) {
         super(driver);
