@@ -15,14 +15,14 @@ public class GetStartedTest extends CoreTestCase {
 
         welcomePage.waitForLearnMoreLink();
         welcomePage.clickNextButton();
-//
-//        welcomePage.waitForNewWayToExplore();
-//        welcomePage.clickNextButton();
-//
-//        welcomePage.waitForAddOrEditPreferredLangText();
-//        welcomePage.clickNextButton();
-//
-//        welcomePage.waitForLearnMoreAboutDataCollected();
-//        welcomePage.clickGetStartedButton();
+
+        welcomePage.waitForNewWayToExplore();
+        welcomePage.clickNextButton();
+
+        welcomePage.waitForAddOrEditPreferredLangText();
+        welcomePage.clickNextButton();
+
+        welcomePage.waitForLearnMoreAboutDataCollected();
+        welcomePage.clickGetStartedButton();
     }
 }

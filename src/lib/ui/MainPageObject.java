@@ -180,14 +180,14 @@ public class MainPageObject {
         Sequence swipe = new Sequence(finger, 1);
 
         if (Platform.getInstance().isAndroid()) {
-            // Для Android: свайп справа налево (как и было изначально)
+
             swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
                     PointerInput.Origin.viewport(), rightX, centerY));
             swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
             swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
                     PointerInput.Origin.viewport(), leftX, centerY));
         } else if (Platform.getInstance().isIOS()) {
-            // Для iOS: тоже свайп справа налево, но параметры могут быть скорректированы под специфику работы с iOS
+
             swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
                     PointerInput.Origin.viewport(), rightX, centerY));
             swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));

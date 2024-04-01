@@ -9,6 +9,7 @@ public class IOSArticlePageObject extends ArticlePageObject {
         FOOTER_ELEMENT = "xpath://XCUIElementTypeStaticText[@name='View article in browser']";
         ADD_TO_LIST_BUTTON = "id:Сохранить на потом";
         JAVA_ARTICLE_TITLE = "id:Java (programming language)";
+        SAVE_READING_LIST_BUTTON = "id:Save for later";
         CLOSE_ARTICLE_BUTTON = "id:Назад";
     }
 

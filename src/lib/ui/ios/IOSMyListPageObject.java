@@ -11,6 +11,12 @@ public class IOSMyListPageObject extends MyListsPageObject {
         GO_BACK_ARROW = "xpath://*[@content-desc='Navigate up']";
         CHOOSE_SAVE_FOLDER_BUTTON = "id:org.wikipedia:id/item_title";
         SAVED_TAB_BUTTON = "xpath://*[@content-desc='Saved']";
+        BACK_BATTON = "xpath://*[@name='Back']";
+        CLEAR_TEXT = "id:Clear text";
+        CLOSE_POPUP = "id:Close";
+        SWIPE_TO_DELETE = "id:swipe action delete";
+        CANCEL_BUTTON = "xpath://XCUIElementTypeStaticText[@name='Cancel']";
+        OPEN_SAVED_LIST_BUTTON = "id:tabbar-save";
         LIST_THE_SAVED = "xpath://*[contains(@resource-id,'item_title_container')][2]";
     }
 

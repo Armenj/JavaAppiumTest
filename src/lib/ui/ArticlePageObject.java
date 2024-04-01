@@ -2,7 +2,10 @@ package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
 import lib.Platform;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
@@ -15,6 +18,7 @@ abstract public class ArticlePageObject extends MainPageObject {
             NAME_OF_THE_LIST_AREA ,
             OK_BUTTON_ON_THE_POPUP,
             CLOSE_ARTICLE_BUTTON,
+            SAVE_READING_LIST_BUTTON,
             JAVA_ARTICLE_TITLE;
 
 
@@ -75,6 +79,25 @@ abstract public class ArticlePageObject extends MainPageObject {
         this.waitForElementAndClick(ADD_TO_LIST_BUTTON, "Cannot find add to list button");
         this.waitForElementAndSendKeys(NAME_OF_THE_LIST_AREA, name_of_folder, "Cannot find area");
         this.waitForElementAndClick(OK_BUTTON_ON_THE_POPUP, "Cannot find ok button on the pop-up");
+    }
+
+    public int getAmountOfArticles() {
+        By articleLocator;
+        if (Platform.getInstance().isAndroid()) {
+            articleLocator = By.id("id_of_article_element_for_android");
+        } else if (Platform.getInstance().isIOS()) {
+            articleLocator = By.xpath("//XCUIElementTypeCollectionView/XCUIElementTypeCell"); // Актуальный XPath для iOS
+        } else {
+            throw new IllegalStateException("Platform not supported");
+        }
+
+        List<WebElement> listOfArticles = driver.findElements(articleLocator);
+        return listOfArticles.size();
+    }
+
+
+    public void addArticlesToSaved(){
+        this.waitForElementAndClick(SAVE_READING_LIST_BUTTON, "Cannot find SAVE_READING_LIST_BUTTON button");
     }
 
     public void addAnotherArticleToMyList(){
