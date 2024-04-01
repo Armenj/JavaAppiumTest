@@ -1,14 +1,22 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
+import lib.Platform;
 
-public class MyListsPageObject extends MainPageObject {
-    private static final String
-            PAGE_LIST_TITLE = "id:org.wikipedia:id/page_list_item_title",
-            GO_BACK_ARROW = "xpath://*[@content-desc='Navigate up']",
-            CHOOSE_SAVE_FOLDER_BUTTON = "id:org.wikipedia:id/item_title",
-            SAVED_TAB_BUTTON = "xpath://*[@content-desc='Saved']",
-            LIST_THE_SAVED = "xpath://*[contains(@resource-id,'item_title_container')][2]";
+abstract public class MyListsPageObject extends MainPageObject {
+    protected static String
+            PAGE_LIST_TITLE,
+            GO_BACK_ARROW,
+            CHOOSE_SAVE_FOLDER_BUTTON,
+            SAVED_TAB_BUTTON,
+            ARTICLE_BY_TITLE,
+            OPEN_SAVED_LIST_BUTTON,
+            BACK_BATTON,
+            CLEAR_TEXT,
+            CLOSE_POPUP,
+            SWIPE_TO_DELETE,
+            CANCEL_BUTTON,
+            LIST_THE_SAVED;
 
     public MyListsPageObject(AppiumDriver driver) {
         super(driver);
@@ -20,8 +28,17 @@ public class MyListsPageObject extends MainPageObject {
     }
 
     public void swipeByArticleToDelete(String articleTitle) {
-        String articleTitleLocator = "xpath://*[@text='" + articleTitle + "']";
+        String articleTitleLocator;
+        if (Platform.getInstance().isAndroid()) {
+            articleTitleLocator = "xpath://*[@text='" + articleTitle + "']";
+        } else if (Platform.getInstance().isIOS()) {
+            articleTitleLocator = "xpath://*[@name='" + articleTitle + "']";
+        } else {
+            throw new IllegalArgumentException("Unsupported platform for swipeByArticleToDelete method");
+        }
+
         this.swipeElementLeftToRight(articleTitleLocator, "Cannot find article with title: " + articleTitle);
+        this.waitForElementAndClick(SWIPE_TO_DELETE, "Cannot swipe to delete button", 5);
         this.waitForElementNotPresent(articleTitleLocator, "Article with title " + articleTitle + " is still present after deletion", 5);
     }
 
@@ -30,5 +47,15 @@ public class MyListsPageObject extends MainPageObject {
         this.waitForElementAndClick(GO_BACK_ARROW, "Cannot navigate back to the main screen", 5); // Предполагаем, что одного нажатия достаточно. Адаптируйте по необходимости.
         this.waitForElementAndClick(SAVED_TAB_BUTTON, "Cannot find Saved tab button", 5);
         this.waitForElementAndClick(LIST_THE_SAVED, "Cannot find list in Saved tab", 5);
+    }
+
+
+    public void openSavedArticles() {
+        this.waitForElementAndClick(BACK_BATTON, "Cannot find back button", 5);
+        this.waitForElementAndClick(CLEAR_TEXT, "Cannot find Clear text button", 10);
+        this.waitForElementAndClick(CANCEL_BUTTON, "Cannot find back button", 5);
+        this.waitForElementAndClick(BACK_BATTON, "Cannot find back button", 5);
+        this.waitForElementAndClick(OPEN_SAVED_LIST_BUTTON, "Cannot find OPEN_SAVED_LIST_BUTTON button");
+        this.waitForElementAndClick(CLOSE_POPUP, "Cannot find close popup", 5);
     }
 }

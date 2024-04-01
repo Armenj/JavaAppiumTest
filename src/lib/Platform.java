@@ -12,6 +12,15 @@ public class Platform {
     private static final String PLATFORM_ANDROID = "android";
     private static final String APPIUM_URL = "http://127.0.0.1:4723/";
 
+    private static Platform instance;
+    private Platform(){}
+    public static Platform getInstance(){
+        if (instance == null) {
+            instance = new Platform();
+        }
+        return instance;
+    }
+
     public AppiumDriver getDriver() throws Exception{
         URL URL = new URL(APPIUM_URL);
         if(this.isAndroid()){
@@ -52,6 +61,8 @@ public class Platform {
         capabilities.setCapability("appium:automationName", "XCUITest");
         capabilities.setCapability("appium:appPackage", "org.wikipedia");
         capabilities.setCapability("appium:app", "/Users/armenmelix/Desktop/JavaAppiumTest/apks/Wikipedia.app");
+        capabilities.setCapability("language", "en");
+        capabilities.setCapability("locale", "en_US");
         return capabilities;
     }
 
